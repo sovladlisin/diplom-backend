@@ -139,7 +139,8 @@ def connectFileToResource(request, pk):
         res = Resource.objects.get(pk=pk)
         res.link.save(file_d.name,  ContentFile(file_d.read()))
         result = model_to_dict(res)
-        result['link'] = 'http://localhost:8000'+res.link.url
+        # result['link'] = 'http://localhost:8000'+res.link.url
+        result['link'] = 'https://annotation-project-backend.herokuapp.com'+res.link.url
         return JsonResponse(result, safe=False)
     return HttpResponse(status=403)
 
