@@ -30,7 +30,6 @@ ALLOWED_HOSTS = ['*']
 CSRF_COOKIE_NAME = "csrftoken"
 
 DEFAULT_FILE_STORAGE = 'db_file_storage.storage.DatabaseFileStorage'
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -70,7 +69,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:8080",
     "http://78.47.176.17:14291",
-    "http://ml.vtargete.ru:14291"
+    "http://ml.vtargete.ru:14291",
+    "https://annotation-project.herokuapp.com",
 ]
 
 

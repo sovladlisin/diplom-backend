@@ -1,6 +1,6 @@
 from rest_framework import routers
-from .api import TaggedItemViewSet, LinkViewSet, ObjectAttributeValueViewSet, ClassAttributeViewSet, RelationViewSet, MarkupViewSet, ClassViewSet, ObjectViewSet, CorpusViewSet, ResourceViewSet, ResourceTypeViewSet, AuthorViewSet, TextToTextViewSet, PlaceViewSet, CorpusPlacesViewSet, CorpusAuthorsViewSet, EntityViewSet
-from .views import LoadCheck, getLinks, addLink, uploadFile, connectFileToResource
+from .api import ResourceTextsViewSet, TaggedItemViewSet, LinkViewSet, ObjectAttributeValueViewSet, ClassAttributeViewSet, RelationViewSet, MarkupViewSet, ClassViewSet, ObjectViewSet, CorpusViewSet, ResourceViewSet, ResourceTypeViewSet, AuthorViewSet, TextToTextViewSet, PlaceViewSet, CorpusPlacesViewSet, CorpusAuthorsViewSet, EntityViewSet
+from .views import LoadCheck, getLinks, addLink, uploadFile, connectFileToResource, getClassAttributes, uploadDocx, changeComments
 from django.urls import path
 from django.conf.urls import url
 router = routers.DefaultRouter()
@@ -23,6 +23,8 @@ router.register('api/objectAttributeValue',
                 ObjectAttributeValueViewSet, 'objectAttributeValue')
 router.register('api/classAttributes',
                 ClassAttributeViewSet, 'classAttributes')
+router.register('api/resourceTexts',
+                ResourceTextsViewSet, 'resourceTexts')
 
 
 urlpatterns = [path('loaderio-dad475efde7ab1a335f97bc6bf875046/',
@@ -31,6 +33,12 @@ urlpatterns = [path('loaderio-dad475efde7ab1a335f97bc6bf875046/',
                     getLinks, name='getLinks'),
                path('api/addLink',
                     addLink, name='addLink'),
+               path('api/getClassAttributes',
+                    getClassAttributes, name='getClassAttributes'),
+               path('api/changeComments',
+                    changeComments, name='changeComments'),
                url(r'^api/connectFileToResource/(?P<pk>\d+)/$',
                    connectFileToResource, name='connectFileToResource'),
+               url(r'^api/uploadDocx/(?P<pk>\d+)/$',
+                   uploadDocx, name='uploadDocx'),
                ] + router.urls

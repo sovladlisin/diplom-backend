@@ -1,11 +1,20 @@
 from django.db.models import Q
-from backend.models import TaggedItem, Link, ObjectAttributeValue, ClassAttribute, Relation, Markup, Class, Object, Corpus, Resource, ResourceType, Author, TextToText, Place, CorpusPlaces, CorpusAuthors, TextToText, Entity
+from backend.models import ResourceTexts, TaggedItem, Link, ObjectAttributeValue, ClassAttribute, Relation, Markup, Class, Object, Corpus, Resource, ResourceType, Author, TextToText, Place, CorpusPlaces, CorpusAuthors, TextToText, Entity
 from rest_framework import viewsets, permissions
-from .serializers import TaggedItemSerializer, LinkSerializer, ClassAttributeSerializer, ObjectAttributeValueSerializer, RelationSerializer, MarkupSerializer, ObjectSerializer, ClassSerializer, CorpusSerializer, ResourceSerializer, ResourceTypeSerializer, AuthorSerializer, TextToTextSerializer, PlaceSerializer, CorpusPlacesSerializer, CorpusAuthorsSerializer, EntitySerializer
+from .serializers import ResourceTextsSerializer, TaggedItemSerializer, LinkSerializer, ClassAttributeSerializer, ObjectAttributeValueSerializer, RelationSerializer, MarkupSerializer, ObjectSerializer, ClassSerializer, CorpusSerializer, ResourceSerializer, ResourceTypeSerializer, AuthorSerializer, TextToTextSerializer, PlaceSerializer, CorpusPlacesSerializer, CorpusAuthorsSerializer, EntitySerializer
 
 
-# perm = permissions.IsAuthenticated
-perm = permissions.AllowAny
+perm = permissions.IsAuthenticated
+# perm = permissions.AllowAny
+
+
+class ResourceTextsViewSet(viewsets.ModelViewSet):
+    queryset = ResourceTexts.objects.all()
+    permission_classes = [
+        perm
+    ]
+
+    serializer_class = ResourceTextsSerializer
 
 
 class TaggedItemViewSet(viewsets.ModelViewSet):

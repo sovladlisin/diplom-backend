@@ -32,3 +32,4 @@ django-db-file-storage
 django-rest-framework
 django-rest-knox
 django-cors-headers
+django-sendfile

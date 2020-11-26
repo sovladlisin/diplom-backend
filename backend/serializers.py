@@ -1,5 +1,11 @@
 from rest_framework import serializers
-from backend.models import TaggedItem, Link, ObjectAttributeValue, ClassAttribute, Relation, Markup, Class, Object, Corpus, Resource, ResourceType, Author, TextToText, Place, CorpusPlaces, CorpusAuthors, TextToText, Entity
+from backend.models import ResourceTexts, TaggedItem, Link, ObjectAttributeValue, ClassAttribute, Relation, Markup, Class, Object, Corpus, Resource, ResourceType, Author, TextToText, Place, CorpusPlaces, CorpusAuthors, TextToText, Entity
+
+
+class ResourceTextsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ResourceTexts
+        fields = '__all__'
 
 
 class LinkSerializer(serializers.ModelSerializer):

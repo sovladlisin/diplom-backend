@@ -118,7 +118,8 @@ class Corpus(models.Model):
 class Resource(models.Model):
     corpus = models.ForeignKey(
         Corpus, blank=True, null=True, related_name='corpus', on_delete=models.CASCADE)
-    name = models.CharField(max_length=300, default="Не указано")
+    title = models.CharField(max_length=300, default="Не указано")
+    title_origin = models.CharField(max_length=300, default="Не указано")
     resource_type = models.ForeignKey(
         ResourceType, blank=True, null=True, related_name='resource_type', on_delete=models.PROTECT)
     language = models.CharField(max_length=300, default="Не указано")
@@ -146,6 +147,7 @@ class Resource(models.Model):
         Author, blank=True, null=True, related_name='resource_commentator', on_delete=models.PROTECT)
 
     published = models.CharField(max_length=300, default="Не указано")
+    place_of_storage = models.CharField(max_length=300, default='Не указано')
     variants = models.CharField(max_length=300, default="Не указано")
     areal = models.CharField(max_length=300, default="Не указано")
     extras = models.CharField(max_length=300, default="Не указано")
@@ -171,7 +173,18 @@ class Resource(models.Model):
         delete_file(self, 'link')
 
     def __str__(self):
-        return self.name
+        return self.title
+
+
+class ResourceTexts(models.Model):
+    original = models.FileField(
+        upload_to='backend.File/bytes/filename/mimetype', blank=True, null=True)
+    translation = models.FileField(
+        upload_to='backend.File/bytes/filename/mimetype', blank=True, null=True)
+    commentary = models.FileField(
+        upload_to='backend.File/bytes/filename/mimetype', blank=True, null=True)
+    resource = models.ForeignKey(
+        Resource, blank=True, null=True, related_name='resource_name', on_delete=models.CASCADE, unique=True)
 
 
 class CorpusPlaces(models.Model):
@@ -201,7 +214,7 @@ class TextToText(models.Model):
         Resource, blank=True, null=True, related_name='translated', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.original.name + '->' + self.translated.name
+        return self.original.title + '->' + self.translated.title
 
 
 class Class(models.Model):
@@ -275,8 +288,14 @@ class Entity(models.Model):
 
     position_start = models.IntegerField(default=0)
     position_end = models.IntegerField(default=0)
+
     markup = models.ForeignKey(
         Markup, blank=True, null=True, related_name='markup', on_delete=models.CASCADE)
 
+    text = models.CharField(default='', blank=True, null=True, max_length=1000)
+
     def __str__(self):
         return self.position_start.__str__() + self.position_end + self.markup.name
+
+    class Meta:
+        unique_together = ("obj", "markup", "position_start", "position_end")
